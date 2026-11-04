@@ -1,0 +1,28 @@
+# Render Blueprint: one web service that runs the API and serves the website.
+# Render → New → Blueprint → pick this repository. You will be asked for the values marked "sync: false".
+services:
+  - type: web
+    name: raktsetu
+    runtime: node
+    plan: free
+    buildCommand: npm ci --include=dev && npm run build
+    startCommand: npm start
+    healthCheckPath: /api/health
+    autoDeployTrigger: commit
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: NODE_VERSION
+        value: '22'
+      - key: MONGODB_URI # MongoDB Atlas connection string
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+      - key: ADMIN_EMAIL # your admin login, created on first start
+        sync: false
+      - key: ADMIN_PASSWORD
+        sync: false
+      - key: SEED_DEMO_DATA # "true" loads sample data into an empty database
+        value: 'false'
+      - key: DEMO_MODE # "true" shows demo sign-in buttons (only if demo data exists)
+        value: 'false'

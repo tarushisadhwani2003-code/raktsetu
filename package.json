@@ -1,0 +1,36 @@
+{
+  "name": "raktsetu",
+  "version": "1.0.0",
+  "private": true,
+  "description": "RaktSetu connects blood donors, blood banks, hospitals and people who need blood.",
+  "type": "module",
+  "workspaces": [
+    "client",
+    "server"
+  ],
+  "scripts": {
+    "dev": "concurrently -k -n api,web -c red,cyan \"npm run dev -w server\" \"npm run dev -w client\"",
+    "build": "npm run build -w client",
+    "start": "npm start -w server",
+    "seed": "npm run seed -w server",
+    "create-admin": "npm run create-admin -w server --",
+    "test": "npm run test:unit && npm test -w server",
+    "test:unit": "node --test shared/tests/*.test.js server/tests/testDatabase.test.js server/tests/runtime.test.js",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "engines": {
+    "node": ">=20.19 <25"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "concurrently": "^10.0.6",
+    "eslint": "^10.14.0",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "eslint-plugin-react-refresh": "^0.5.7",
+    "globals": "^17.14.0",
+    "prettier": "^3.9.10",
+    "prettier-plugin-tailwindcss": "^0.8.1"
+  }
+}
